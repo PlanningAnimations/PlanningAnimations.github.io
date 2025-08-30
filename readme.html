@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Tuto Générateur de planning</title>
+<style>
+body {
+    background-color:#1e1e1e;
+    color:#f0f0f0;
+    font-family:Consolas, monospace;
+    margin:0; padding:20px;
+}
+h1 {
+    text-align:center;
+    margin-bottom:10px;
+}
+.note {
+    background:#2b2b2b;
+    border-left:5px solid #4caf50;
+    padding:12px;
+    margin:15px 0;
+    border-radius:8px;
+    transition: all 0.2s ease;
+}
+.note:hover { 
+    transform: translateY(-4px); 
+    box-shadow:0 10px 30px rgba(0,0,0,0.6); 
+    background:#151515; 
+    border-left-color:#4caf4f93; 
+}
+.warning {
+    background:#2b2b2b;
+    border-left:5px solid #ff9800;
+    padding:12px;
+    margin:15px 0;
+    border-radius:8px;
+    transition: all 0.2s ease;
+}
+.warning:hover { 
+    transform: translateY(-4px); 
+    box-shadow:0 10px 30px rgba(0,0,0,0.6); 
+    background:#151515; 
+    border-left-color:#ff9900b3; 
+}
+.command {
+    background:#2b2b2b;
+    border:2px solid #a6e22e;
+    padding-top:1px;
+    padding-bottom: 3px;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin:15px 0;
+    border-radius:4px;
+    transition: all 0.2s ease;
+}
+.command:hover { 
+    box-shadow:0 10px 30px rgba(0,0,0,0.6); 
+    background:#151515; 
+}
+.sublist {
+    margin-left: 1.5em;
+}
+p {
+    margin:8px 0;
+    line-height:1.5;
+    background:#272822;
+    color:#f8f8f2;
+    padding:12px;
+    border-radius:8px;
+    overflow-x:auto;
+}
+ol {
+    margin:8px 0;
+    line-height:1.5;
+    background:#272822;
+    color:#f8f8f2;
+    padding:12px;
+    border-radius:8px;
+    overflow-x:visible;
+}
+ul {
+    margin:8px 0;
+    line-height:1.5;
+    background:#272822;
+    color:#f8f8f2;
+    padding:12px;
+    border-radius:8px;
+    overflow-x:visible;
+}
+li {
+    margin-left:1.75em;
+}
+pre {
+    background:#272822;
+    color:#f8f8f2;
+    padding:12px;
+    border-radius:8px;
+    overflow-x:auto;
+}
+code {
+    font-family: Consolas, monospace;
+    color:#a6e22e;
+}
+.card {
+    background:#2b2b2b60;
+    padding:20px;
+    margin:20px 0;
+    border-radius:12px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.5);
+}
+.card h2 {
+    margin-top:0;
+    color:#ffffff;
+}
+img.marged {
+    margin-left: 30px;
+    max-width:50%;
+}
+img.centered {
+    max-width:50%;
+}
+div.centered {
+    display: flex;
+    justify-content: right;
+}
+img {
+    margin:20px auto;
+    border-radius:5px;
+    box-shadow:0 0 15px rgba(0,0,0,0.6);
+}
+.btn {
+    display:inline-block;
+    background:#151515;
+    color:#fff;
+    padding:5px 10px;
+    border-radius:8px;
+    text-decoration:none;
+    transition:0.2s ease;
+    cursor: pointer;
+    margin-left:0.5em;
+}
+.btn:hover {
+    background:#000000;
+}
+a {
+    color: #ffffff;
+    text-decoration: none;
+}
+a:visited {
+    color: #ffffff;
+}
+a:hover {
+    color: #c4c4c4;
+}
+a:active {
+    color: #6f6f6f;
+}
+#scrollTopBtn {
+    opacity: 0;
+    pointer-events: none;
+    position: fixed;
+    bottom: 30px;
+    right: 15px;
+    z-index: 100;
+    border: none;
+    outline: none;
+    background-color: #3a3a3a;
+    color: white;
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.4);
+    transition: opacity 0.4s ease, transform 0.2s ease;
+}
+#scrollTopBtn.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+#scrollTopBtn:hover {
+    background-color: #5a5a5a;
+    transform: translateY(-3px);
+}
+</style>
+</head>
+<body>
+<h1>⚙️ Installer le Générateur de Planning pour les Animateurs ⚙️</h1>
+<div class="card">
+    <h2>📜 Sommaire</h2>
+    <ol>
+        <li><a href="#prerequis">ℹ️ Pré-requis</a></li>
+        <li><a href="#installation">📦 Installation</a></li>
+        <li><a href="#execution">🚀 Exécuter le Programme</a></li>
+        <li><a href="#création">⚙️ Création d'un planning</a></li>
+        <li><a href="#aide">🆘 Aide et Crédits</a></li>
+    </ol>
+</div>
+<div class="card" id="prerequis">
+    <h2>ℹ️ Pré-requis</h2>
+    <p>Il vous faudra plusieurs pré-requis avant de pouvoir exécuter le Générateur de planning :</p>
+    <ul>
+        <li>Téléchargez le programme <a href="https://github.com/PlanningAnimations/PlanningAnimations.github.io/blob/main/main.py" target="_blank"><code>main.py (Cliquez-moi)</code></a>, l'image <a href="https://github.com/PlanningAnimations/PlanningAnimations.github.io/blob/main/semaine_vide.png" target="_blank"><code>semaine_vide.png (Cliquez-moi)</code></a> et la police d'écriture <a href="https://github.com/PlanningAnimations/PlanningAnimations.github.io/blob/main/JosefinSans-SemiBoldItalic.ttf" target="_blank"><code>JosefinSans-SemiBoldItalic.ttf (Cliquez-moi)</code></a> ainsi que le fichier <a href="https://github.com/PlanningAnimations/PlanningAnimations.github.io/blob/main/requirements.txt" target="_blank"><code>requirements.txt (Cliquez-moi)</code></a></li>
+        <li>Installez Python 3.10 ou supérieur</li>
+        <ol class="sublist">
+            <li><a href="https://www.python.org/downloads/" target="_blank">Téléchargez l'installateur Python (Cliquez-moi)</a></li>
+            <li>Ouvrez l'installateur</li>
+            <li>Cliquez sur "Utiliser les droits administrateurs pendant l'installation" et "Ajouter au chemin d'accès" en bas</li>
+            <li>Cliquez sur "Installation Personnalisée"</li>
+            <li>Vérifiez que toutes les cases soient cochées puis appuyez sur "suivant"</li>
+            <li>Cochez "Installer Python 3.XX pour tous les utilisateurs", vérifiez le chemin d'accès puis appuyez sur "Installer"</li>
+            <li>Appuyez sur "Oui" pour autoriser les droits administrateurs</li>
+            <li>Lorsque le bouton "Fermer" apparaît, Python a été installé avec succès</li>
+            <li>Pour vérifier que Python fonctionne bien, vous pouvez appuyer sur votre touche windows, écrire CMD</li>
+            <li>Ouvrez le terminal est exécutez la commande <code class="command">python --version</code><button class="btn" onclick="copyMessage(this)">Copier</button>. Vous devriez voir un message <code>Python 3.XX.XX</code> apparaître.</li>
+            <p class="note"><a href="https://youtube.com/watch?v=mHD_1m7ex94" target="_blank">✅ Conseil : Si besoin, vous pouvez suivre ce Tutoriel pour installer Python sur Windows</a></p>
+        </ol>
+        <li>Enfin, créez un dossier nommé <code>Planning animations</code> où vous le souhaitez. Il n'y aura ici que les programmes pour le fonctionnement du <code>Générateur de planning</code> </li>
+    </ul>
+</div>
+<div class="card" id="installation">
+    <h2>📦 Installation</h2>
+    <p class="warning">⚠️ Attention : Vous devez avoir suivi les instructions de la partie Pré-requis avant de pouvoir installer le Générateur de planning</p>
+    <p>Pour installer le Générateur de planning, vous devez suivre les instructions suivantes :</p>
+    <ul>
+        <li>Placez les 4 fichiers télechargés <code>main.py</code>, <code>semaine_vide.png</code>, <code>JosefinSans-SemiBoldItalic.ttf</code> et <code>requirements.txt</code> dans le dossier <code>Planning animations</code></li>
+        <li>Si vous avez fermé le terminal, rouvrez-le</li>
+        <li>Ouvrez un explorateur de fichiers et rendez-vous dans le dossier <code>Planning animations</code>. Copiez le chemin d'accès</li>
+        <li>Dans le terminal, exécutez la commande suivante : <code class="command">cd &lt;chemin d'accès&gt;</code><button class="btn" onclick="copyMessage(this)">Copier</button></li>
+        <li>Exécutez la commande suivante : <code class="command">pip install -r requirements.txt</code><button class="btn" onclick="copyMessage(this)">Copier</button></li>
+        <li>Vous pouvez maintenant fermer le terminal</li>
+    </ul>
+</div>
+<div class="card" id="execution">
+    <h2>🚀 Exécuter le Générateur de planning</h2>
+    <p class="warning">⚠️ Attention : Vous devez avoir suivi les instructions des parties précédentes avant de pouvoir exécuter le Générateur de planning</p>
+    <p>Pour exécuter le Générateur de planning, vous devez suivre les instructions suivantes :</p>
+    <ul>
+        <li>Vous allez avoir besoin de créer un fichier .bat qui exécutera votre <code>Générateur de planning</code>. Allez sur votre bureau et créez un fichier nommé <code>Générateur de planning.bat</code></li>
+        <li>Appuyez sur "Oui" pour modifier l'extension du fichier</li>
+        <li>Faites "Clic droit", "Afficher d'autres options" puis "Modifier"</li>
+        <li>Mettez-y ce code :</li>
+        <p class="sublist"><code class="command">@echo off</code><button class="btn" onclick="copyMessage(this)">Copier</button></p>
+        <p class="sublist"><code class="command">cd /d &lt;chemin d'accès au dossier précédant le Générateur de planning&gt;</code><button class="btn" onclick="copyMessage(this)">Copier</button></p>
+        <p class="sublist"><code class="command">start "" python "Planning animations\main.py"</code><button class="btn" onclick="copyMessage(this)">Copier</button></p>
+        <li>Faites <code>Ctrl + S</code> pour enregistrer puis fermez la fenêtre</li>
+        <li>Vous pouvez maintenant double cliquer sur le fichier pour l'exécuter</li>
+    </ul>
+    <p class="note">✅ Conseil : Vous pouvez créer un raccourci qui redirige vers le <code>Générateur de planning.bat</code> afin d'y mettre un icône et rendre cela plus joli. Vous pouvez ensuite mettre le fichier <code>Générateur de planning.bat</code> en invisible et vous ne verrez que le raccourci vers celui-ci</p>    
+</div>
+<div class="card" id="création">
+    <h2>⚙️ Création d'un planning</h2>
+    <p class="warning">⚠️ Attention : Vous devez avoir suivi les instructions des parties précédentes avant de pouvoir Créer un planning</p>
+    <p>Pour Créer un planning, vous devez suivre les instructions suivantes :</p>
+    <ul>
+        <li>Lors de l'execution du <code>Générateur de planning</code>, vous devriez voir ceci :</li>
+        <img class="marged" src="https://i.ibb.co/FkPXvFSJ/G-n-rateur-de-Planning-Tuto-1.png" alt="">
+        <li>Vous pouvez écrire à la suite le nom de l'animation du lundi puis faire entrée. Si vous n'avez aucune animation de prévue, laissez vide puis faites entrée</li>
+        <li>Ensuite, vous devriez voir ceci :</li>
+        <img class="marged" src="https://i.ibb.co/bjj7tvhG/G-n-rateur-de-Planning-Tuto-2.png" alt="">
+        <li>Vous pouvez ici écrire le jour et l'heure prévue de l'animation au format <code>JJ/MM - HHhMM (ex: 01/09 - 14h00)</code></li>
+        <li>Vous pourrez ensuite voir ceci, il faut suivre les mêmes étapes pour tous les jours de la semaine</li>
+        <img class="marged" src="https://i.ibb.co/NgyZSyjp/G-n-rateur-de-Planning-Tuto-3.png" alt="">
+        <li>Une fois le programme terminé, vous devriez voir ceci :</li>
+        <img class="marged" src="https://i.ibb.co/B1Rwpzf/G-n-rateur-de-Planning-Tuto-4.png" alt="">
+        <p class="note">✅ Précision : comme affiché sur l'image, vous pouvez vous tromper dans la date ou mettre un nom d'animation trop long, le programme vous demandera simplement de nouveau l'élément posant problème</p>
+        <li>Enfin, vous pourrez ouvrir le fichier <code>planning_semaine_XXXX-XX-XX_XX-XX-XX.png</code> contenu dans le dossier <code>Planning animations</code> pour voir votre planning. Voici ci-joint un exemple de planning généré :</li>
+    </ul>
+    <pre><div class="centered"><img class="centered" src="https://i.ibb.co/pryywJKf/G-n-rateur-de-Planning-Aper-u.png" alt=""></div></pre>
+</div>
+<div class="card" id="aide">
+    <h2>🆘 Aide et Crédits</h2>
+    <p>
+        Pour tout soucis, n'hesitez pas à me contacter sur discord : <bold><code>TurtleSmile</code></bold><br>
+        Ce projet a été réalisé dans le but de permettre aux animateurs de Shell & Chill de créer leur planning chaque semaine. Il peut y avoir des bugs, mais ils seront corrigés au plus vite. Vous pouvez les signaler en me contactant sur discord.
+        <br>
+        <br>
+        Merci d'avoir pris le temps de lire ce readme ! <br>
+        Vous pouvez si vous le souhaitez modifier le code du <code>Générateur de planning</code> à votre guise, mais ne le distribuez pas à des personnes en dehors du Staff de Shell & Chill.
+
+    </p>
+</div>
+<button onclick="topFunction()" id="scrollTopBtn" title="Remonter en haut">⬆</button>
+<script>
+function copyMessage(button) {
+    // Récupère l'élément <code> juste avant le bouton cliqué
+    const codeElement = button.previousElementSibling;
+    if (!codeElement) return;
+
+    const msg = codeElement.textContent.trim();
+
+    navigator.clipboard.writeText(msg).then(() => {
+        const oldText = button.textContent;
+        button.textContent = "Copié !";
+
+        // Retour après 1 seconde
+        setTimeout(() => {
+        button.textContent = oldText;
+        }, 1000);
+    }).catch(err => console.error("Erreur de copie:", err));
+}
+let mybutton = document.getElementById("scrollTopBtn");
+window.addEventListener("scroll", () => {
+  if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+    mybutton.classList.add("show");
+  } else {
+    mybutton.classList.remove("show");
+  }
+});
+function topFunction() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body></html>
